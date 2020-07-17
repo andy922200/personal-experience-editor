@@ -18,6 +18,8 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "windowWidth",
+      "today",
       "isValidatingUser",
       "isAuthenticated",
       "currentUser",
