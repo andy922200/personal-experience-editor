@@ -74,29 +74,29 @@ let userController = {
   //     }
   //   });
   // },
-  // getCurrentUser: (req, res) => {
-  //   // req.user is returned by passport-jwt
-  //   const { user } = req
+  getCurrentUser: (req, res) => {
+    // req.user is returned by passport-jwt
+    const { user } = req
 
-  //   let payload = { id: user.id };
-  //   let token = jwt.sign(payload, process.env.JWT_SECRET, {
-  //     expiresIn: "24h",
-  //   });
+    let payload = { id: user.id };
+    let token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "24h",
+    });
 
-  //   return res.json({
-  //     status: 'success',
-  //     message: 'OK',
-  //     token: token,
-  //     isAuthenticated: true,
-  //     user: {
-  //       id: user.id,
-  //       name: user.name,
-  //       email: user.email,
-  //       role: user.role,
-  //       isSponsor: user.isSponsor
-  //     }
-  //   })
-  // },
+    return res.json({
+      status: "success",
+      message: "OK",
+      token: token,
+      isAuthenticated: true,
+      user: {
+        id: user.id,
+        name: user.name,
+        profile_img: user.profile_img,
+        age: user.age,
+        email: user.email,
+      },
+    });
+  },
 };
 
 module.exports = userController;
