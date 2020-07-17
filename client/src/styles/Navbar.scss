@@ -1,0 +1,39 @@
+@import "mobile";
+
+.navbar-custom{
+  color:white;
+  padding: 0.5rem 15px !important;
+  .icon{
+    @include mobile{
+      text-align: center;
+      width:100%;
+    }
+  }
+  .button-group{
+    @include mobile{
+      display: none;
+    }
+    .btn--custom{
+      margin-left: 10px;
+    }
+  }
+  .button-group__wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+    flex-wrap:wrap;
+    .button-group__mobile{
+      width:100%;
+      display: flex;
+      justify-content: center;
+      .btn--custom{
+        margin: 10px 10px 5px 10px;
+      }
+    }
+    .icon-style{
+      margin: 5px 0px 0px 0px;
+      cursor: pointer;
+    }
+  }
+}

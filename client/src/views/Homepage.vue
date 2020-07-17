@@ -27,6 +27,7 @@
 
 <script>
 import Navbar from "./../components/Navbar";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Homepage",
@@ -35,6 +36,12 @@ export default {
     return {
       selected: ""
     };
+  },
+  created() {
+    console.log("currentUserId", this.currentUser.id);
+  },
+  computed: {
+    ...mapGetters(["currentUser"])
   }
 };
 </script>

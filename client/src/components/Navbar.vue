@@ -1,22 +1,117 @@
 <template>
-  <nav class="navbar navbar-dark bg-dark">
+  <nav class="navbar navbar-dark bg-dark navbar-custom">
     <div class="icon">
       <router-link to="/">
         <img src="../assets/icons.svg" alt="logo" width="48" height="48" />
       </router-link>
     </div>
+
     <div class="button-group">
-      <button type="button" class="btn btn-outline-success">Log In</button>
-      <button type="button" class="btn btn-outline-danger">Log Out</button>
-      <button type="button" class="btn btn-outline-primary">Register</button>
+      <button
+        type="button"
+        v-if="!isAuthenticated"
+        class="btn btn-outline-secondary btn--custom"
+      >
+        Your Profile
+      </button>
+      <button type="button" class="btn btn-outline-primary btn--custom">
+        Register
+      </button>
+      <router-link :to="{ name: 'signIn' }" v-if="!isAuthenticated">
+        <button type="button" class="btn btn-outline-success btn--custom">
+          Log In
+        </button>
+      </router-link>
+      <button type="button" v-else class="btn btn-outline-danger btn--custom" @click="triggerLogOut">
+        Log Out
+      </button>
+    </div>
+
+    <div class="button-group__wrapper" v-if="windowWidth <= 600">
+      <div v-if="isExpanded" class="button-group__mobile">
+        <button
+          type="button"
+          v-if="!isAuthenticated"
+          class="btn btn-outline-secondary btn-sm btn--custom"
+        >
+          Profile
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-sm btn--custom"
+        >
+          Register
+        </button>
+        <router-link :to="{ name: 'signIn' }" v-if="!isAuthenticated">
+          <button
+            type="button"
+            class="btn btn-outline-success btn-sm btn--custom"
+          >
+            Log In
+          </button>
+        </router-link>
+        <button
+          type="button"
+          v-else
+          class="btn btn-outline-danger btn-sm btn--custom"
+          @click="triggerLogOut"
+        >
+          Log Out
+        </button>
+      </div>
+      <b-icon
+        icon="chevron-down"
+        font-scale="1"
+        class="icon-style"
+        @click="changeExpansion(true)"
+        v-if="!isExpanded"
+      ></b-icon>
+      <b-icon
+        icon="chevron-up"
+        font-scale="1"
+        class="icon-style"
+        @click="changeExpansion(false)"
+        v-else
+      ></b-icon>
     </div>
   </nav>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
+import { Toast } from "./../utils/mixin";
+
 export default {
-  name: "Navbar"
+  name: "Navbar",
+  data() {
+    return {
+      isExpanded: false
+    };
+  },
+  computed: {
+    ...mapGetters(["isAuthenticated", "windowWidth"])
+  },
+  methods: {
+    ...mapMutations(["revokeAuthentication"]),
+    changeExpansion(status) {
+      status ? (this.isExpanded = true) : (this.isExpanded = false);
+    },
+    async triggerLogOut() {
+      try {
+        this.revokeAuthentication();
+        if (this.$route.name !== "homepage") {
+          this.$router.push({ name: "homepage" });
+        }
+        Toast.fire({
+          icon: "success",
+          title: "Log Out Successfully!"
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
 };
 </script>
 
-<style></style>
+<style lang="scss" src="../styles/Navbar.scss"></style>
