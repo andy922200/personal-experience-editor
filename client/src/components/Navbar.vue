@@ -14,15 +14,22 @@
       >
         Your Profile
       </button>
-      <button type="button" class="btn btn-outline-primary btn--custom">
-        Register
-      </button>
-      <router-link :to="{ name: 'signIn' }" v-if="!isAuthenticated">
-        <button type="button" class="btn btn-outline-success btn--custom">
-          Log In
+      <router-link :to="{ name: 'signUp' }">
+        <button type="button" class="btn btn-outline-primary btn--custom">
+          Register
         </button>
       </router-link>
-      <button type="button" v-else class="btn btn-outline-danger btn--custom" @click="triggerLogOut">
+      <router-link :to="{ name: 'signIn' }" v-if="!isAuthenticated">
+        <button type="button" class="btn btn-outline-success btn--custom">
+          Sign In
+        </button>
+      </router-link>
+      <button
+        type="button"
+        v-else
+        class="btn btn-outline-danger btn--custom"
+        @click="triggerLogOut"
+      >
         Log Out
       </button>
     </div>
@@ -36,18 +43,20 @@
         >
           Profile
         </button>
-        <button
-          type="button"
-          class="btn btn-outline-primary btn-sm btn--custom"
-        >
-          Register
-        </button>
+        <router-link :to="{ name: 'signUp' }">
+          <button
+            type="button"
+            class="btn btn-outline-primary btn-sm btn--custom"
+          >
+            Register
+          </button>
+        </router-link>
         <router-link :to="{ name: 'signIn' }" v-if="!isAuthenticated">
           <button
             type="button"
             class="btn btn-outline-success btn-sm btn--custom"
           >
-            Log In
+            Sign In
           </button>
         </router-link>
         <button

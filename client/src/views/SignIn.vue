@@ -108,7 +108,7 @@ export default {
       try {
         let validationFormResult = await this.validation();
 
-        if(validationFormResult){
+        if (validationFormResult) {
           let fetchingResult = await this.signIn(this.form);
 
           if (fetchingResult) {
@@ -124,7 +124,6 @@ export default {
             });
           }
         }
-       
       } catch (err) {
         console.log(err);
       }
@@ -132,4 +131,3 @@ export default {
   }
 };
 </script>
-

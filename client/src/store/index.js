@@ -17,18 +17,18 @@ export default new Vuex.Store({
     currentUser: {
       id: -1,
       name: "",
-      email: "",
+      email: ""
     },
-    token: "",
+    token: ""
   },
   getters: {
-    windowWidth: (state) => state.windowWidth,
-    today: (state) => state.today,
-    isValidatingUser: (state) => state.isValidatingUser,
-    isRegistering: (state) => state.isRegistering,
-    isAuthenticated: (state) => state.isAuthenticated,
-    currentUser: (state) => state.currentUser,
-    token: (state) => state.token,
+    windowWidth: state => state.windowWidth,
+    today: state => state.today,
+    isValidatingUser: state => state.isValidatingUser,
+    isRegistering: state => state.isRegistering,
+    isAuthenticated: state => state.isAuthenticated,
+    currentUser: state => state.currentUser,
+    token: state => state.token
   },
   mutations: {
     setWindowWidth(state, value) {
@@ -43,7 +43,7 @@ export default new Vuex.Store({
     setCurrentUser(state, currentUser) {
       state.currentUser = {
         ...state.currentUser,
-        ...currentUser,
+        ...currentUser
       };
       state.token = localStorage.getItem("token");
       state.isAuthenticated = true;
@@ -52,12 +52,12 @@ export default new Vuex.Store({
       state.currentUser = {
         id: -1,
         name: "",
-        email: "",
+        email: ""
       };
       state.isAuthenticated = false;
       state.token = "";
       localStorage.removeItem("token");
-    },
+    }
   },
   actions: {
     async signIn({ commit }, logInForm) {
@@ -84,7 +84,6 @@ export default new Vuex.Store({
     async signUp({ commit }, registerForm) {
       try {
         commit("setIsRegistering", true);
-
         let { statusText, data } = await usersAPI.signUp(registerForm);
 
         if (statusText !== "OK" || data.status !== "success") {
@@ -117,9 +116,9 @@ export default new Vuex.Store({
         commit("revokeAuthentication");
         return false;
       }
-    },
+    }
   },
   modules: {
     jobRecords
-  },
+  }
 });
