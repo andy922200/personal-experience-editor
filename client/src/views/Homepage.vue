@@ -24,19 +24,27 @@
 
 <script>
 import Navbar from "./../components/Navbar";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Homepage",
   components: { Navbar },
   created() {
-    console.log("currentUserId", this.currentUser.id);
+    if(this.currentUser.id !== -1){
+      this.getJobRecords(this.currentUser.id);
+    }else{
+      this.getJobRecords();
+    }
   },
   computed: {
     ...mapGetters(["currentUser"]),
+    ...mapGetters("jobRecords",["jobRecords"]),
     landingPageName(){
       return this.currentUser.id === -1 ? "Anonymous" : this.currentUser.name;
     }
+  },
+  methods:{
+    ...mapActions("jobRecords",["getJobRecords"])
   }
 };
 </script>

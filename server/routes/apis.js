@@ -16,8 +16,8 @@ router.post("/signUp", upload.array('image'), userController.signUp);
 router.put(`/profile/edit/:userId`, authenticated, upload.array("image"), userController.putUser);
 
 // job Records
-router.get("/jobRecords", jobRecordsController.getJobRecords)
+router.get("/jobRecords/browse/:userId", jobRecordsController.getJobRecords)
 // router.post("/jobRecords/create", authenticated, jobRecordsController.postJobRecord);
 // router.put("/jobRecords/edit/:recordId", authenticated, jobRecordsController.putJobRecord);
-// router.get("/jobRecords/:userId/:recordId", jobRecordsController.getSpecificJobRecord);
+// router.get("/jobRecords/browseOne/:userId/:recordId", jobRecordsController.getSpecificJobRecord);
 module.exports = router;

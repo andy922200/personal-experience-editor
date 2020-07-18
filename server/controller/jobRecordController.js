@@ -7,7 +7,11 @@ const Op = Sequelize.Op
 let jobRecordController = {
   getJobRecords: (req,res)=>{
     let whereRules = [{ public_status: 1 }];
-    // 根據登入的ID，決定要不要推 {UserId: UserId} 到 whereRules
+
+    if ( Number(req.params.userId) !== -1) {
+      whereRules.push({ UserId: req.params.userId })
+    };
+
     JobRecord.findAll({ 
       where:{
         [Op.or]: whereRules
@@ -17,7 +21,9 @@ let jobRecordController = {
       raw: true,
       nest: true
     }).then(records=>{
-      return res.json({records})
+      return res.json({
+        data: records
+      });
     })
   }
 };

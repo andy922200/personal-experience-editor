@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseLocalDbURL = "http://localhost:3000/api";
+const baseLocalDbURL = "http://localhost:3001/api";
 // const baseLocalDbURL = "https://cocktails-collections-sml.herokuapp.com/api";
 const getToken = () => localStorage.getItem("token");
 
@@ -30,3 +30,9 @@ export const usersAPI = {
     });
   }
 };
+
+export const jobRecordsAPI = {
+  getJobRecords: currentUserId => {
+    return LocalDbRequest.get(`/jobRecords/browse/${currentUserId}`);
+  }
+}
