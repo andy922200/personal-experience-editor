@@ -4,6 +4,7 @@ import Homepage from "../views/Homepage.vue";
 import NotFound from "../views/NotFound.vue";
 import SignIn from "../views/SignIn.vue";
 import SignUp from "../views/SignUp.vue";
+import Profile from "../views/Profile.vue";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -25,6 +26,11 @@ const routes = [
     component: SignUp
   },
   {
+    path: "/profile/:userId",
+    name: "profile",
+    component: Profile
+  },
+  {
     path: "*",
     name: "not-found",
     component: NotFound
@@ -35,6 +41,8 @@ const router = new VueRouter({
   routes
 });
 
+import { Toast } from "./../utils/mixin";
+
 router.beforeEach(async (to, from, next) => {
   const tokenInStore = store.state.token;
   const tokenInLocalStorage = localStorage.getItem("token");
@@ -43,6 +51,17 @@ router.beforeEach(async (to, from, next) => {
   // if true, fetchCurrentUser
   if (tokenInLocalStorage && tokenInLocalStorage !== tokenInStore) {
     isAuthenticated = await store.dispatch("fetchCurrentUser");
+  }
+
+  if (
+    Number(to.params.userId) !== store.state.currentUser.id &&
+    to.name === "profile"
+  ) {
+    Toast.fire({
+      icon: "warning",
+      title: "You don't have permission."
+    });
+    return;
   }
 
   if (!isAuthenticated && to.name === "userFavoriteDrinks") {

@@ -98,6 +98,23 @@ export default new Vuex.Store({
         return false;
       }
     },
+    async updateProfile({ commit }, formWithUserIdObject) {
+      try {
+        commit("setIsRegistering", true);
+        let { statusText, data } = await usersAPI.putUser(formWithUserIdObject);
+
+        if (statusText !== "OK" || data.status !== "success") {
+          throw new Error();
+        }
+
+        commit("setIsRegistering", false);
+        return true;
+      } catch (err) {
+        console.log(err);
+        commit("setIsRegistering", false);
+        return false;
+      }
+    },
     async fetchCurrentUser({ commit }) {
       try {
         const { data, statusText } = await usersAPI.getCurrentUser();

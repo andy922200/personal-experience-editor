@@ -7,13 +7,14 @@
     </div>
 
     <div class="button-group">
-      <button
-        type="button"
-        v-if="!isAuthenticated"
-        class="btn btn-outline-secondary btn--custom"
+      <router-link
+        v-if="isAuthenticated"
+        :to="{ name: 'profile', params: { userId: currentUser.id } }"
       >
-        Your Profile
-      </button>
+        <button type="button" class="btn btn-outline-secondary btn--custom">
+          Your Profile
+        </button>
+      </router-link>
       <router-link :to="{ name: 'signUp' }">
         <button type="button" class="btn btn-outline-primary btn--custom">
           Register
@@ -36,13 +37,17 @@
 
     <div class="button-group__wrapper" v-if="windowWidth <= 600">
       <div v-if="isExpanded" class="button-group__mobile">
-        <button
-          type="button"
-          v-if="!isAuthenticated"
-          class="btn btn-outline-secondary btn-sm btn--custom"
+        <router-link
+          v-if="isAuthenticated"
+          :to="{ name: 'profile', params: { userId: currentUser.id } }"
         >
-          Profile
-        </button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary btn-sm btn--custom"
+          >
+            Profile
+          </button>
+        </router-link>
         <router-link :to="{ name: 'signUp' }">
           <button
             type="button"
@@ -98,7 +103,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["isAuthenticated", "windowWidth"])
+    ...mapGetters(["isAuthenticated", "windowWidth", "currentUser"])
   },
   methods: {
     ...mapMutations(["revokeAuthentication"]),

@@ -5,9 +5,9 @@
       <div class="row">
         <div class="col-12">
           <div class="signIn">
-            <form class="w-100" @submit.prevent.stop="handleSignUpForm">
+            <form class="w-100" @submit.prevent.stop="handleUpdateUserForm">
               <div class="text-center my-3">
-                <h1 class="h3 font-weight-normal">Register</h1>
+                <h1 class="h3 font-weight-normal">Your Profile</h1>
               </div>
 
               <div class="form-label-group mb-2">
@@ -97,14 +97,12 @@
                 :class="windowWidth > 600 ? 'btn-lg' : ''"
                 :disabled="isRegistering"
               >
-                Submit
+                Update
               </button>
 
               <div class="text-center mb-3">
                 <p>
-                  <router-link to="/signin"
-                    >Already Registered? Sign in here!</router-link
-                  >
+                  <router-link to="/">Back to Homepage</router-link>
                 </p>
               </div>
             </form>
@@ -117,11 +115,11 @@
 
 <script>
 import Navbar from "../components/Navbar";
-import { mapGetters, mapMutations, mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { Toast } from "./../utils/mixin";
 
 export default {
-  name: "SignUp",
+  name: "Profile",
   components: { Navbar },
   data() {
     return {
@@ -135,12 +133,17 @@ export default {
       }
     };
   },
+  mounted() {
+    this.form = {
+      ...this.form,
+      ...this.currentUser
+    };
+  },
   computed: {
-    ...mapGetters(["isRegistering", "windowWidth"])
+    ...mapGetters(["isRegistering", "windowWidth", "currentUser"])
   },
   methods: {
-    ...mapMutations(["revokeAuthentication"]),
-    ...mapActions(["signUp"]),
+    ...mapActions(["updateProfile"]),
     async validation() {
       const emailRule = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/gim;
 
@@ -177,20 +180,22 @@ export default {
       return true;
     },
 
-    async handleSignUpForm(event) {
+    async handleUpdateUserForm(event) {
       try {
         const formRawData = event.target;
         const formData = new FormData(formRawData);
         let validationFormResult = await this.validation();
 
         if (validationFormResult) {
-          let fetchingResult = await this.signUp(formData);
+          let fetchingResult = await this.updateProfile({
+            userId: this.currentUser.id,
+            data: formData
+          });
           if (fetchingResult) {
             Toast.fire({
               icon: "success",
-              title: "Register Successfully! Please log in again."
+              title: "Update Successfully!"
             });
-            this.revokeAuthentication();
             this.$router.push({ name: "homepage" });
           } else {
             Toast.fire({
