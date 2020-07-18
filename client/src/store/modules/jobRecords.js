@@ -11,27 +11,27 @@ const data = {
   },
 
   getters: {
-    jobRecords : state => state.jobRecords,
-    fetchingData : state => state.fetchingData
+    jobRecords: state => state.jobRecords,
+    fetchingData: state => state.fetchingData
   },
 
   mutations: {
-    setJobRecords(state, data){
-      state.jobRecords = data
+    setJobRecords(state, data) {
+      state.jobRecords = data;
     },
-    setFetchingData(state, status){
-      state.fetchingData = status
+    setFetchingData(state, status) {
+      state.fetchingData = status;
     }
   },
 
   actions: {
-    async getJobRecords({ commit }, currentUserId){
-      try{
-        commit("setFetchingData",true)
+    async getJobRecords({ commit }, currentUserId) {
+      try {
+        commit("setFetchingData", true);
 
         let {
           statusText,
-          data: { data: rawData },
+          data: { data: rawData }
         } = await jobRecordsAPI.getJobRecords(currentUserId);
 
         if (statusText !== "OK") {
@@ -43,20 +43,24 @@ const data = {
         let finalResult = [];
 
         for (let i = 0; i < keys.length; i++) {
-          let set = {}
-          set.id = groupByData[keys[i]][0]["UserId"]
-          set.name = groupByData[keys[i]][0].User.name
+          let set = {};
+          set.id = groupByData[keys[i]][0]["UserId"];
+          set.name = groupByData[keys[i]][0].User.name;
 
-          let formattedData = groupByData[keys[i]].map(d=>{
-            let formattedOneObject = { ...d}
-            formattedOneObject.start_date = moment(formattedOneObject.start_date).format("YYYY-MM-DD");
-            formattedOneObject.end_date = moment(formattedOneObject.end_date).format("YYYY-MM-DD")
-            return formattedOneObject
-          })
+          let formattedData = groupByData[keys[i]].map(d => {
+            let formattedOneObject = { ...d };
+            formattedOneObject.start_date = moment(
+              formattedOneObject.start_date
+            ).format("YYYY-MM-DD");
+            formattedOneObject.end_date = moment(
+              formattedOneObject.end_date
+            ).format("YYYY-MM-DD");
+            return formattedOneObject;
+          });
 
-          let sortedData = formattedData.sort((a,b)=>{
-            return a.end_date > b.end_date ? -1 : 1
-          })
+          let sortedData = formattedData.sort((a, b) => {
+            return a.end_date > b.end_date ? -1 : 1;
+          });
 
           set.data = sortedData;
           finalResult.push(set);
@@ -64,12 +68,12 @@ const data = {
 
         commit("setJobRecords", finalResult);
         commit("setFetchingData", false);
-      }catch(err){
-        console.log(err)
+      } catch (err) {
+        console.log(err);
         commit("setFetchingData", false);
       }
     }
-  },
+  }
 };
 
 export default data;

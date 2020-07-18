@@ -35,4 +35,4 @@ export const jobRecordsAPI = {
   getJobRecords: currentUserId => {
     return LocalDbRequest.get(`/jobRecords/browse/${currentUserId}`);
   }
-}
+};
