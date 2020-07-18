@@ -5,19 +5,16 @@
       <div class="row">
         <div class="col-12">
           <div class="homepage">
-            <h3>This is Homepage.</h3>
-            <b-form-group label="Individual radios">
-              <b-form-radio v-model="selected" name="some-radios" value="A"
-                >Option A</b-form-radio
-              >
-              <b-form-radio v-model="selected" name="some-radios" value="B"
-                >Option B</b-form-radio
-              >
-            </b-form-group>
+            <h3>Hello, {{landingPageName}}</h3>
 
-            <div class="mt-3">
-              Selected: <strong>{{ selected }}</strong>
-            </div>
+            <template v-if="currentUser.id !== -1">
+              <img :src="currentUser.profile_img" alt="profile_img">
+              <p>Name : {{currentUser.name}} </p>
+              <p>Age : {{currentUser.age}} </p>
+              <p>Email : {{currentUser.email}} </p>
+            </template>
+
+            <!--get functions will be here.-->
           </div>
         </div>
       </div>
@@ -32,16 +29,14 @@ import { mapGetters } from "vuex";
 export default {
   name: "Homepage",
   components: { Navbar },
-  data() {
-    return {
-      selected: ""
-    };
-  },
   created() {
     console.log("currentUserId", this.currentUser.id);
   },
   computed: {
-    ...mapGetters(["currentUser"])
+    ...mapGetters(["currentUser"]),
+    landingPageName(){
+      return this.currentUser.id === -1 ? "Anonymous" : this.currentUser.name;
+    }
   }
 };
 </script>

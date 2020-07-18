@@ -64,7 +64,7 @@ router.beforeEach(async (to, from, next) => {
     return;
   }
 
-  if (!isAuthenticated && to.name === "userFavoriteDrinks") {
+  if (!isAuthenticated && to.name === "profile") {
     next("signIn");
     return;
   }
