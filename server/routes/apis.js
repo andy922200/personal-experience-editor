@@ -13,7 +13,8 @@ const authenticated = passport.authenticate("jwt", { session: false });
 router.get(`/get_current_user`, authenticated, userController.getCurrentUser);
 router.post("/signin", userController.signIn);
 router.post("/signUp", upload.array('image'), userController.signUp);
-
+router.put(`/profile/edit/:userId`, upload.array("image"), userController.putUser);
+// job Records
 router.get("/jobRecords", jobRecordsController.getJobRecords)
 
 module.exports = router;

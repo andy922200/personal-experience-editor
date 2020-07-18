@@ -38,13 +38,13 @@ let userController = {
           name: user.name,
           profile_img: user.profile_img,
           age: user.age,
-          email: user.email
+          email: user.email,
         },
       });
     });
   },
   signUp: (req, res) => {
-    const { files: files } = req
+    const { files: files } = req;
 
     if (req.body.password !== req.body.passwordCheck) {
       return res.json({
@@ -82,7 +82,7 @@ let userController = {
               });
             });
           });
-        }else{
+        } else {
           User.create({
             name: req.body.name,
             profile_img: "https://picsum.photos/200",
@@ -99,13 +99,13 @@ let userController = {
               message: "Register successfully!",
             });
           });
-        }        
+        }
       }
     });
   },
   getCurrentUser: (req, res) => {
     // req.user is returned by passport-jwt
-    const { user } = req
+    const { user } = req;
 
     let payload = { id: user.id };
     let token = jwt.sign(payload, process.env.JWT_SECRET, {
@@ -124,6 +124,74 @@ let userController = {
         age: user.age,
         email: user.email,
       },
+    });
+  },
+  putUser: (req, res) => {
+    const { files: files } = req;
+    const { name, email, password, age } = req.body;
+
+    if (req.body.password !== req.body.passwordCheck) {
+      return res.json({
+        status: "error",
+        message: "Two Passwords do not match!",
+      });
+    }
+
+    User.findAll({ where: { id: req.body.email } }).then((users) => {
+      if ( Number(users.length) === 0) {
+         User.findByPk(req.params.userId).then((user) => {
+           if (files[0]) {
+             imgur.setClientID(IMGUR_CLIENT_ID);
+             imgur.upload(files[0].path, (err, img) => {
+               user
+                 .update({
+                   name: name,
+                   profile_img: files[0]
+                     ? img.data.link
+                     : "https://picsum.photos/200",
+                   email: email,
+                   password: bcrypt.hashSync(
+                     password,
+                     bcrypt.genSaltSync(10),
+                     null
+                   ),
+                   age: age,
+                 })
+                 .then((user) => {
+                   return res.json({
+                     status: "success",
+                     message: "Update successfully!",
+                   });
+                 });
+             });
+           } else {
+             user
+               .update({
+                 name: name,
+                 profile_img: user.profile_img,
+                 email: email,
+                 password: bcrypt.hashSync(
+                   password,
+                   bcrypt.genSaltSync(10),
+                   null
+                 ),
+                 age: age,
+               })
+               .then((user) => {
+                 return res.json({
+                   status: "success",
+                   message: "Update successfully!",
+                 });
+               });
+           }
+         });
+      } else {
+        return res.json({
+          status: "error",
+          message: "The email has already used!",
+        });
+      }
+      
     });
   },
 };
