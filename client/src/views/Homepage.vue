@@ -22,6 +22,11 @@
                   <p>Email : {{ currentUser.email }}</p>
                 </div>
               </div>
+              <div class="addRecord">
+                <b-button pill href="#" variant="primary"
+                  >Add a new experience</b-button
+                >
+              </div>
             </template>
 
             <div class="jobRecords">
@@ -91,7 +96,7 @@
                             }
                           }"
                         >
-                          <b-button pill variant="primary">Edit</b-button>
+                          <b-button pill variant="secondary">Edit</b-button>
                         </router-link>
                         <b-button pill href="#" variant="danger"
                           >Delete</b-button

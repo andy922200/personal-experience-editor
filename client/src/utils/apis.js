@@ -39,5 +39,14 @@ export const jobRecordsAPI = {
     return LocalDbRequest.get(`/jobRecords/browse/record${jobRecordId}`, {
       headers: { Authorization: `Bearer ${getToken()}` }
     });
+  },
+  putOneJobRecord: objectData => {
+    return LocalDbRequest.put(
+      `/jobRecords/edit/${objectData.recordId}`,
+      objectData.data,
+      {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      }
+    );
   }
 };

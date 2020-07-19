@@ -10,7 +10,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     windowWidth: 0,
-    today: moment().format("LL"),
+    today: moment().format("YYYY-MM-DD"),
     isValidatingUser: false,
     isAuthenticated: false,
     isRegistering: false,

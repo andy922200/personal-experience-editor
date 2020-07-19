@@ -30,7 +30,7 @@ const data = {
       state.fetchingData = status;
     },
     setIsUpdating(state, status) {
-      state.isUpdating = status
+      state.isUpdating = status;
     }
   },
 
@@ -124,15 +124,24 @@ const data = {
       }
     },
 
-    async updateOneJobRecord({ commit }){
-      try{
-        commit("setIsUpdating",true)
+    async updateOneJobRecord({ commit }, dataSet) {
+      try {
+        commit("setIsUpdating", true);
+        let {
+          statusText,
+          data: { data: rawData }
+        } = await jobRecordsAPI.putOneJobRecord(dataSet);
 
+        if (statusText !== "OK") {
+          throw new Error();
+        }
 
-        commit("setIsUpdating",false)
-      }catch(err){
-        console.log(err)
-        commit("setIsUpdating",false)
+        console.log("rawData", rawData);
+
+        commit("setIsUpdating", false);
+      } catch (err) {
+        console.log(err);
+        commit("setIsUpdating", false);
       }
     }
   }
