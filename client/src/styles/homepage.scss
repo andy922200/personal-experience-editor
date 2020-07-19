@@ -1,3 +1,6 @@
+@import "mobile";
+@import "mixins";
+
 .homepage{
   display: flex;
   justify-content: center;
@@ -5,5 +8,87 @@
   .landingPage__title{
     width:100%;
     text-align: center;
+    margin: 10px 0px;
+  }
+  .logInUser{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap:wrap;
+    margin: 10px 0px;
+    .profile_img__wrapper{
+      max-width: 200px;
+      max-height: 200px;
+      margin: 0 auto;
+      .profile_img{
+        @include responsive-images
+      }
+    }
+    .profile__info{
+      margin-left: 10px;
+    }
+  }
+  
+  .jobRecords{
+    .person{
+      margin-bottom: 10px;
+      .person__title{
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      .cards{
+        display: flex;
+        justify-content: space-between;
+        flex-wrap:wrap;
+        .card__custom{
+          margin:0px;
+          .card-title{
+            @include mobile{
+              font-size: 20px;
+            }
+          }
+          .person__detail{
+            .workPeriod{
+              text-align: right;
+              .workPeriod__star{
+                font-size: 18px;
+                font-weight: bold;
+                color:orange;
+              }
+              @include mobile{
+                font-size: 14px;
+                text-align: left;
+              }
+            }
+            .company__info{
+              width:100%;
+              display: flex;
+              align-items: center;
+              img{
+                margin: 10px 10px 10px 0px;
+              }
+              .company__name{
+                font-size:18px;
+              }
+            }
+          }
+        }
+        article{
+          width:100%;
+          padding:10px;
+        }
+        .button-group{
+          display: flex;
+          justify-content:flex-end;
+          @include mobile{
+            justify-content:center;
+          }
+          a{
+            margin-left: 10px;
+          }
+        }
+      }
+    }
   }
 }
