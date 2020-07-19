@@ -25,6 +25,21 @@ let jobRecordController = {
         data: records
       });
     })
+  },
+  getOneJobRecord:(req, res) => {
+    JobRecord.findByPk(req.params.recordId,{
+      include: { model: User, attributes: { exclude: ['password'] } }
+    }).then(record=>{
+      if (record.UserId !== req.user.id){
+        return res.json({
+          status: "error",
+          message: `${req.user.id}, You don't have permission'`,
+        });
+      } 
+      return res.json({
+        data:record
+      })
+    })
   }
 };
 
