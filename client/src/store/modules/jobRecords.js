@@ -7,20 +7,30 @@ const data = {
 
   state: {
     jobRecords: [],
-    fetchingData: false
+    selectedJobRecord: [],
+    fetchingData: false,
+    isUpdating: false
   },
 
   getters: {
     jobRecords: state => state.jobRecords,
-    fetchingData: state => state.fetchingData
+    selectedJobRecord: state => state.selectedJobRecord,
+    fetchingData: state => state.fetchingData,
+    isUpdating: state => state.isUpdating
   },
 
   mutations: {
     setJobRecords(state, data) {
       state.jobRecords = data;
     },
+    setSelectedJobRecord(state, data) {
+      state.selectedJobRecord = data;
+    },
     setFetchingData(state, status) {
       state.fetchingData = status;
+    },
+    setIsUpdating(state, status) {
+      state.isUpdating = status
     }
   },
 
@@ -80,6 +90,49 @@ const data = {
       } catch (err) {
         console.log(err);
         commit("setFetchingData", false);
+      }
+    },
+
+    async getOneJobRecord({ commit }, recordId) {
+      try {
+        commit("setFetchingData", true);
+
+        let {
+          statusText,
+          data: { data: rawData }
+        } = await jobRecordsAPI.getOneJobRecord(recordId);
+
+        if (statusText !== "OK") {
+          throw new Error();
+        }
+
+        let formattedResult = { ...rawData };
+
+        formattedResult.start_date = moment(formattedResult.start_date).format(
+          "YYYY-MM-DD"
+        );
+
+        formattedResult.end_date = formattedResult.current_position
+          ? moment().format("YYYY-MM-DD")
+          : moment(formattedResult.end_date).format("YYYY-MM-DD");
+
+        commit("setSelectedJobRecord", [formattedResult]);
+        commit("setFetchingData", false);
+      } catch (err) {
+        console.log(err);
+        commit("setFetchingData", true);
+      }
+    },
+
+    async updateOneJobRecord({ commit }){
+      try{
+        commit("setIsUpdating",true)
+
+
+        commit("setIsUpdating",false)
+      }catch(err){
+        console.log(err)
+        commit("setIsUpdating",false)
       }
     }
   }

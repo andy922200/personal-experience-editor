@@ -33,6 +33,11 @@ export const usersAPI = {
 
 export const jobRecordsAPI = {
   getJobRecords: currentUserId => {
-    return LocalDbRequest.get(`/jobRecords/browse/${currentUserId}`);
+    return LocalDbRequest.get(`/jobRecords/browse/by/user${currentUserId}`);
+  },
+  getOneJobRecord: jobRecordId => {
+    return LocalDbRequest.get(`/jobRecords/browse/record${jobRecordId}`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    });
   }
 };
