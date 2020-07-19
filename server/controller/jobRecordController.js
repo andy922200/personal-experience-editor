@@ -8,7 +8,7 @@ let jobRecordController = {
   getJobRecords: (req,res)=>{
     let whereRules = [{ public_status: 1 }];
 
-    if ( Number(req.params.userId) !== -1) {
+    if ( Number(req.params.userId) !== -1 && req.params.userId) {
       whereRules.push({ UserId: req.params.userId })
     };
 

@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     start_date: DataTypes.DATE,
     end_date: DataTypes.DATE,
+    current_position: DataTypes.BOOLEAN,
     public_status: DataTypes.BOOLEAN,
     UserId: DataTypes.INTEGER
   }, {

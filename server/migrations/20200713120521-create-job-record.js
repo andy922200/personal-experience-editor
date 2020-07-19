@@ -26,6 +26,9 @@ module.exports = {
       end_date: {
         type: Sequelize.DATE
       },
+      current_position: {
+        type: Sequelize.BOOLEAN
+      },
       UserId: {
         type: Sequelize.INTEGER
       },

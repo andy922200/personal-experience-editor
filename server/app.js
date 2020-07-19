@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const methodOverride = require('method-override')
 const app = express()
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 3000
 const cors = require('cors')
 // 開啟跨網域連線
 app.use(cors())
