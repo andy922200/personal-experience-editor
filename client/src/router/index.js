@@ -70,7 +70,12 @@ router.beforeEach(async (to, from, next) => {
     return;
   }
 
-  if (!isAuthenticated && to.name === "profile") {
+  if (!isAuthenticated && (to.name === "profile" || to.name === "record")) {
+    next("signIn");
+    return;
+  }
+
+  if (to.name === "record" && (store.state.currentUser.id !== Number(to.params.userId))){
     next("signIn");
     return;
   }
