@@ -75,7 +75,10 @@ router.beforeEach(async (to, from, next) => {
     return;
   }
 
-  if (to.name === "record" && (store.state.currentUser.id !== Number(to.params.userId))){
+  if (
+    to.name === "record" &&
+    store.state.currentUser.id !== Number(to.params.userId)
+  ) {
     next("signIn");
     return;
   }
