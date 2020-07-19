@@ -19,6 +19,6 @@ router.put(`/profile/edit/:userId`, authenticated, upload.array("image"), userCo
 router.get("/jobRecords/browse/by/user:userId", jobRecordsController.getJobRecords);
 router.get("/jobRecords/browse/record:recordId", authenticated, jobRecordsController.getOneJobRecord);
 // router.post("/jobRecords/create", authenticated, jobRecordsController.postJobRecord);
-// router.put("/jobRecords/edit/:recordId", authenticated, jobRecordsController.putJobRecord);
-// router.get("/jobRecords/browseOne/:userId/:recordId", jobRecordsController.getSpecificJobRecord);
+router.put("/jobRecords/edit/:recordId", authenticated, upload.array('company_logo'), jobRecordsController.putOneJobRecord);
+// router.delete("/jobRecords/delete/:recordId", authenticated, jobRecordsController.deleteOneJobRecord);
 module.exports = router;

@@ -40,6 +40,10 @@ let jobRecordController = {
         data:record
       })
     })
+  },
+  putOneJobRecord: (req, res) => {
+    const { files: files } = req;
+    console.log(files[0])
   }
 };
 
