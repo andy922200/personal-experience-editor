@@ -40,6 +40,7 @@ const data = {
 
         let groupByData = _.groupBy(rawData, "UserId");
         let keys = Object.keys(groupByData);
+        let tempResult = [];
         let finalResult = [];
 
         for (let i = 0; i < keys.length; i++) {
@@ -52,9 +53,9 @@ const data = {
             formattedOneObject.start_date = moment(
               formattedOneObject.start_date
             ).format("YYYY-MM-DD");
-            formattedOneObject.end_date = moment(
-              formattedOneObject.end_date
-            ).format("YYYY-MM-DD");
+            formattedOneObject.end_date = d.current_position 
+              ? moment().format("YYYY-MM-DD") 
+              : moment(formattedOneObject.end_date).format("YYYY-MM-DD");
             return formattedOneObject;
           });
 
@@ -63,8 +64,12 @@ const data = {
           });
 
           set.data = sortedData;
-          finalResult.push(set);
+          tempResult.push(set);
         }
+
+        let currentUserData = tempResult.filter(item => item.id === currentUserId);
+        let otherUsersData = tempResult.filter(item => item.id !== currentUserId);
+        finalResult = [...currentUserData, ...otherUsersData];
 
         commit("setJobRecords", finalResult);
         commit("setFetchingData", false);

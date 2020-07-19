@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-12">
           <div class="homepage">
-            <h3>Hello, {{ landingPageName }}</h3>
+            <h3 class="landingPage__title">Hello, {{ landingPageName }}</h3>
 
             <template v-if="currentUser.id !== -1">
               <img :src="currentUser.profile_img" alt="profile_img" />
@@ -33,7 +33,7 @@ export default {
     if (this.currentUser.id !== -1) {
       this.getJobRecords(this.currentUser.id);
     } else {
-      this.getJobRecords();
+      this.getJobRecords("default");
     }
   },
   computed: {

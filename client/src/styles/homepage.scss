@@ -1,0 +1,9 @@
+.homepage{
+  display: flex;
+  justify-content: center;
+  flex-wrap:wrap;
+  .landingPage__title{
+    width:100%;
+    text-align: center;
+  }
+}

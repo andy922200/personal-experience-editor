@@ -8,7 +8,7 @@ module.exports = {
     proxy: {
       "/api": {
         // target: "https://cocktails-collections-sml.herokuapp.com/",
-        target: "http://localhost:3001"
+        target: "http://localhost:3000"
       }
     }
   }
