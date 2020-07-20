@@ -260,12 +260,12 @@ export default {
             data: formData
           });
           if (fetchingResult) {
-            console.log("success");
-            // Toast.fire({
-            //   icon: "success",
-            //   title: "Register Successfully! Please log in again."
-            // });
-            // this.$router.push({ name: "homepage" });
+            Toast.fire({
+              icon: "success",
+              title: "Update Successfully!"
+            });
+            localStorage.removeItem(`editForm${this.form.id}`);
+            this.$router.push({ name: "homepage" });
           } else {
             Toast.fire({
               icon: "warning",

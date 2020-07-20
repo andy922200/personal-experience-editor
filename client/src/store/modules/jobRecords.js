@@ -127,21 +127,19 @@ const data = {
     async updateOneJobRecord({ commit }, dataSet) {
       try {
         commit("setIsUpdating", true);
-        let {
-          statusText,
-          data: { data: rawData }
-        } = await jobRecordsAPI.putOneJobRecord(dataSet);
+        let { statusText } = await jobRecordsAPI.putOneJobRecord(dataSet);
 
-        if (statusText !== "OK") {
+        if (statusText === "OK") {
+          commit("setSelectedJobRecord", []);
+          commit("setIsUpdating", false);
+          return true;
+        } else {
           throw new Error();
         }
-
-        console.log("rawData", rawData);
-
-        commit("setIsUpdating", false);
       } catch (err) {
         console.log(err);
         commit("setIsUpdating", false);
+        return false;
       }
     }
   }
