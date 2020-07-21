@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const baseLocalDbURL = "http://localhost:3000/api";
-// const baseLocalDbURL = "https://cocktails-collections-sml.herokuapp.com/api";
+// const baseLocalDbURL = "http://localhost:3000/api";
+const baseLocalDbURL = "https://personal-experience-editor.herokuapp.com/";
 const getToken = () => localStorage.getItem("token");
 
 const LocalDbRequest = axios.create({
