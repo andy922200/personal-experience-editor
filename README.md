@@ -1,11 +1,11 @@
 <p align="center">
-  <a href="#">
+  <a href="https://personal-experience-editor.herokuapp.com/">
     <img src="./iconForReadme.svg" alt="logo" width="48" height="48">
   </a>
 </p>
 
 <h3 align="center"> Years of Experience? </h3>
-<a href="#">
+<a href="https://personal-experience-editor.herokuapp.com/">
   <p align="center">Click here to the demo site</p>
 </a>
 
@@ -16,39 +16,36 @@
 - [Run the frontend server](#run-the-frontend-server)
 
 ## About this project 
-<!-- <p>An web application based on <a href="https://www.thecocktaildb.com/"> The Cocktail DB</a>. Users can do the following actions.</p>
-<p>使用 <a href="https://www.thecocktaildb.com/"> The Cocktail DB</a> 資料庫的雞尾酒資料為基礎，打造一個可以讓使用者以手機和電腦進行以下功能的應用程式</p>
+<p> Users can do the following actions.</p>
 
-1. 基本功能 (Basic Functions)
-  - [x] 使用者用「名稱」關鍵字搜尋酒譜 ( Search cocktails by name)
-  - [x] 使用者用「材料」關鍵字搜尋酒譜 ( Search cocktails by ingredients)
-  - [x] 當使用者不曉得今天要喝什麼時，可以點選「隨機來一杯」按鈕獲取靈感 ( Click for a random drink)
-2. 進階功能 (Advanced Functions)
-  - [x] 使用者可以註冊 ( Register )
-  - [x] 使用者可以登入 ( Log-in )
-  - [ ] 使用者可以收藏酒譜 ( My Favorite Recipes )
-3. 額外功能 (Extra Functions)
-  - [ ] 使用者可以贊助表達支持 ( Donate Function ) -->
+1. Basic Functions
+  - [x] View all public users' work experiences
+  - [x] Create, Edit, Delete their own work experiences and profile if they logged in
+  - [x] Offline Mode
+2. Advanced Functions
+  - [x] Register
+  - [x] Log-in
   
 ## How to use
 **Website 網站**
-<!-- <p> Users can browse and search the cocktail recipes. If they registered and logged in, they can save their favorite recipes and donate to this project if they would like to.</p>
-<p>使用者可以瀏覽、查詢雞尾酒譜。如果註冊會員並登入的話，可以收藏酒譜和進行自由贊助。</p> -->
-<!-- <p align="center">
-    <img src="./client/public/static/demo.gif" alt="Website Demo">
-</p> -->
+<p> Users can browse public personal work experience by default.</p> 
+<p> If they logged in, they could create, edit and delete their own personal profile and work experiences.</p>
 
 ## Source Kits used in this project
 **Front End**
 - [vue](https://vuejs.org/) - The Progressive JavaScript Framework.
+- [Bootstrap Vue]() - With BootstrapVue you can build responsive, mobile-first, and ARIA accessible projects on the web using Vue.js and the world's most popular front-end CSS library — Bootstrap v4.
 - [axios](https://github.com/axios/axios) - Promise based HTTP client for the browser and node.js
 - [sweetalert2](https://sweetalert2.github.io/) - A beautiful, responsive, customizable popup boxes
 
-<!-- **Back End**
+**Back End**
 - [cors](https://www.npmjs.com/package/cors) - To activate Cross-Origin Resource Sharing
-- [faker](https://www.npmjs.com/package/faker) - To generate the seed data for testing -->
+- [faker](https://www.npmjs.com/package/faker) - To generate the seed data for testing
+- [imgur-node-api](https://www.npmjs.com/package/imgur-node-api) - Imgur anonymous upload in nodejs using the imgur api.
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) - An implementation of JSON Web Tokens.
+- [sequelize](https://www.npmjs.com/package/sequelize) - Sequelize is a promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server.
 
-<!-- ## Run the local server
+## Run the local server
 ### Prerequisites
 - [npm](https://www.npmjs.com/get-npm)
 - [Node.js](https://nodejs.org/en/download/)
@@ -59,21 +56,21 @@
 Clone this repository to your local machine
 
 ```
-$ git clone https://github.com/andy922200/Cocktails-Collections.git
+$ git clone https://github.com/andy922200/personal-experience-editor.git
 ```
 ### Setup Database
 **Create database via MySQL Workbench Panel**
 
 ```
 > Run the following code
-drop database if chatroom;
-create database chatroom;
+drop database if personal_experience_editor;
+create database personal_experience_editor;
 ```
 
 ### Setup the Project on your device
 **1. Enter the project folder**
 ```
-$ cd chatroom
+$ cd PersonalExperienceEditor
 ```
 **2. Install packages via npm**
 
@@ -86,9 +83,10 @@ $ npm install
 "development": {
   "username": "root",
   "password": "<YOUR_WORKBENCH_PASSWORD>",
-  "database": "chatroom",
+  "database": "personal_experience_editor",
   "host": "127.0.0.1",
-  "dialect": "mysql"
+  "dialect": "mysql",
+  "operatorsAliases": "Sequelize.Op"
 }
 ```
 **4. Run migration**
@@ -110,7 +108,7 @@ $ npm run dev
 ```
 If you see the following message, the backend server is running.
 > App is listening on port 3000!
-```  -->
+``` 
 
 ## Run the frontend server
 **1. Enter the project folder**
