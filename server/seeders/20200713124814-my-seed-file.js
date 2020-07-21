@@ -17,7 +17,7 @@ module.exports = {
       email: 'user1@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       profile_img: faker.image.avatar(),
-      age: 31,
+      age: 35,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -25,7 +25,7 @@ module.exports = {
       email: 'user2@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       profile_img: faker.image.avatar(),
-      age: 32,
+      age: 40,
       createdAt: new Date(),
       updatedAt: new Date()
     }], {});
