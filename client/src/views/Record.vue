@@ -74,7 +74,9 @@
                     accept="image/*"
                     class="form-control-file"
                   />
-                  <p class="warning-message text-danger mt-2">The file size must be lower than 3MB.</p>
+                  <p class="warning-message text-danger mt-2">
+                    The file size must be lower than 3MB.
+                  </p>
                 </div>
 
                 <div class="form-group">
@@ -178,7 +180,7 @@
 
 <script>
 import Navbar from "../components/Navbar";
-import Spinner from "../components/Spinner"
+import Spinner from "../components/Spinner";
 import { mapGetters, mapActions } from "vuex";
 import moment from "moment";
 import _ from "lodash";

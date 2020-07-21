@@ -64,7 +64,7 @@
 
 <script>
 import Navbar from "../components/Navbar";
-import Spinner from "../components/Spinner"
+import Spinner from "../components/Spinner";
 import { mapGetters, mapActions } from "vuex";
 import { Toast } from "./../utils/mixin";
 

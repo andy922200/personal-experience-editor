@@ -8,11 +8,7 @@
             <h3 class="landingPage__title">Hello, {{ landingPageName }}</h3>
 
             <div class="jobRecords">
-              <div
-                class="person"
-                v-for="person in jobRecords"
-                :key="person.id"
-              >
+              <div class="person" v-for="person in jobRecords" :key="person.id">
                 <h4
                   class="person__title"
                   v-if="!isAuthenticated || currentUser.id !== person.id"

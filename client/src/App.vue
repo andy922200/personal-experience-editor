@@ -28,7 +28,7 @@ export default {
     ])
   },
   methods: {
-    ...mapMutations(["setWindowWidth","setWindowHeight"]),
+    ...mapMutations(["setWindowWidth", "setWindowHeight"]),
     initialize() {
       this.detectWindowWidth();
     },

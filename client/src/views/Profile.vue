@@ -6,7 +6,11 @@
         <div class="col-12">
           <div class="signIn">
             <Spinner v-if="isRegistering" />
-            <form v-else class="w-100" @submit.prevent.stop="handleUpdateUserForm">
+            <form
+              v-else
+              class="w-100"
+              @submit.prevent.stop="handleUpdateUserForm"
+            >
               <div class="text-center my-3">
                 <h1 class="h3 font-weight-normal">Your Profile</h1>
               </div>
@@ -90,7 +94,9 @@
                   accept="image/*"
                   class="form-control-file"
                 />
-                <p class="warning-message text-danger mt-2">The file size must be lower than 3MB.</p>
+                <p class="warning-message text-danger mt-2">
+                  The file size must be lower than 3MB.
+                </p>
               </div>
 
               <button
@@ -117,7 +123,7 @@
 
 <script>
 import Navbar from "../components/Navbar";
-import Spinner from "../components/Spinner"
+import Spinner from "../components/Spinner";
 import { mapGetters, mapActions } from "vuex";
 import { Toast } from "./../utils/mixin";
 
