@@ -27,7 +27,7 @@
   - [x] Log-in
   
 ## How to use
-**Website 網站**
+**Website**
 <p> Users can browse public personal work experience by default.</p> 
 <p> If they logged in, they could create, edit and delete their own personal profile and work experiences.</p>
 
