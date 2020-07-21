@@ -57,6 +57,9 @@ const data = {
           let set = {};
           set.id = groupByData[keys[i]][0]["UserId"];
           set.name = groupByData[keys[i]][0].User.name;
+          set.profile_img = groupByData[keys[i]][0].User.profile_img;
+          set.age = groupByData[keys[i]][0].User.age;
+          set.email = groupByData[keys[i]][0].User.email;
 
           let formattedData = groupByData[keys[i]].map(d => {
             let formattedOneObject = { ...d };
@@ -124,6 +127,24 @@ const data = {
       }
     },
 
+    async postOneJobRecord({ commit }, dataSet) {
+      try {
+        commit("setIsUpdating", true);
+        let { statusText } = await jobRecordsAPI.postOneJobRecord(dataSet);
+
+        if (statusText === "OK") {
+          commit("setIsUpdating", false);
+          return true;
+        } else {
+          throw new Error();
+        }
+      } catch (err) {
+        console.log(err);
+        commit("setIsUpdating", false);
+        return false;
+      }
+    },
+
     async updateOneJobRecord({ commit }, dataSet) {
       try {
         commit("setIsUpdating", true);
@@ -131,6 +152,24 @@ const data = {
 
         if (statusText === "OK") {
           commit("setSelectedJobRecord", []);
+          commit("setIsUpdating", false);
+          return true;
+        } else {
+          throw new Error();
+        }
+      } catch (err) {
+        console.log(err);
+        commit("setIsUpdating", false);
+        return false;
+      }
+    },
+
+    async deleteOneJobRecord({ commit }, dataSet) {
+      try {
+        commit("setIsUpdating", true);
+        let { statusText } = await jobRecordsAPI.deleteOneJobRecord(dataSet);
+
+        if (statusText === "OK") {
           commit("setIsUpdating", false);
           return true;
         } else {

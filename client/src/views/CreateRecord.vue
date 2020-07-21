@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row">
         <div class="col-12">
-          <div class="jobRecord">
+          <div class="createRecord">
             <Spinner v-if="isUpdating" />
             <template v-else>
               <b-alert
@@ -27,9 +27,10 @@
                   >
                 </p>
               </b-alert>
+
               <form
                 class="w-100"
-                @submit.prevent.stop="handleUpdateJobRecordForm"
+                @submit.prevent.stop="handleCreateJobRecordForm"
               >
                 <div class="text-center my-3">
                   <h1 class="h3 font-weight-normal">
@@ -157,7 +158,7 @@
                   :class="windowWidth > 600 ? 'btn-lg' : ''"
                   :disabled="isUpdating"
                 >
-                  Update
+                  Create
                 </button>
 
                 <div class="text-center mb-3">
@@ -180,49 +181,59 @@
 import Navbar from "../components/Navbar";
 import Spinner from "../components/Spinner"
 import { mapGetters, mapActions } from "vuex";
+import { Toast } from "./../utils/mixin";
 import moment from "moment";
 import _ from "lodash";
-import { Toast } from "./../utils/mixin";
 
 export default {
-  name: "JobRecord",
+  name: "CreateRecord",
   components: { Navbar, Spinner },
   data() {
     return {
       form: {
-        title: "",
-        company_name: "",
+        title: "Job Title",
+        company_name: "Company Name",
         company_logo: "",
         start_date: "",
         end_date: "",
         public_status: false,
         description: "",
-        current_position: ""
+        current_position: false
       },
       openAlert: true,
       lastEntriesExisting: false,
       lastEntries: {}
     };
   },
-  async created() {
-    try {
-      let selectedRecordId = this.$route.params.recordId;
-      await this.getOneJobRecord(selectedRecordId);
-      this.form = {
-        ...this.form,
-        ...this.selectedJobRecord[0]
-      };
-      this.checkLastEntries();
-    } catch (err) {
-      console.log(err);
-    }
+  created() {
+    this.checkLastEntries();
   },
   computed: {
-    ...mapGetters(["windowWidth", "today"]),
+    ...mapGetters(["windowWidth", "today", "currentUser"]),
     ...mapGetters("jobRecords", ["selectedJobRecord", "isUpdating"])
   },
   methods: {
-    ...mapActions("jobRecords", ["getOneJobRecord", "updateOneJobRecord"]),
+    ...mapActions("jobRecords", ["postOneJobRecord"]),
+
+    checkLastEntries() {
+      if (localStorage[`createForm`]) {
+        this.lastEntries = JSON.parse(localStorage[`createForm`]);
+        this.lastEntriesExisting = true;
+      } else {
+        return (this.lastEntriesExisting = false);
+      }
+    },
+
+    async recoverLastEntries() {
+      try {
+        if (!_.isEmpty(this.lastEntries)) {
+          this.form = this.lastEntries;
+          this.openAlert = false;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
 
     async validation() {
       if (
@@ -263,15 +274,15 @@ export default {
       return true;
     },
 
-    async handleUpdateJobRecordForm(event) {
+    async handleCreateJobRecordForm(event) {
       try {
         const formRawData = event.target;
         const formData = new FormData(formRawData);
         let validationFormResult = await this.validation();
 
         if (validationFormResult) {
-          let fetchingResult = await this.updateOneJobRecord({
-            recordId: this.form.id,
+          let fetchingResult = await this.postOneJobRecord({
+            userId: this.currentUser.id,
             data: formData
           });
           if (fetchingResult) {
@@ -279,7 +290,7 @@ export default {
               icon: "success",
               title: "Update Successfully!"
             });
-            localStorage.removeItem(`editForm${this.form.id}`);
+            localStorage.removeItem(`createForm`);
             this.$router.push({ name: "homepage" });
           } else {
             Toast.fire({
@@ -291,46 +302,26 @@ export default {
       } catch (err) {
         console.log(err);
       }
-    },
-    checkLastEntries() {
-      if (localStorage[`editForm${this.form.id}`]) {
-        this.lastEntries = JSON.parse(localStorage[`editForm${this.form.id}`]);
-        return _.isEqual(this.lastEntries, this.selectedJobRecord[0])
-          ? (this.lastEntriesExisting = false)
-          : (this.lastEntriesExisting = true);
-      } else {
-        return (this.lastEntriesExisting = false);
-      }
-    },
-    async recoverLastEntries() {
-      try {
-        if (!_.isEmpty(this.lastEntries)) {
-          this.form = this.lastEntries;
-          this.openAlert = false;
-        }
-      } catch (err) {
-        console.log(err);
-      }
     }
   },
   watch: {
     form: {
       async handler(newVal) {
         if (newVal) {
-          localStorage[`editForm${this.form.id}`] = JSON.stringify(newVal);
+          localStorage[`createForm`] = JSON.stringify(newVal);
         }
       },
       deep: true
     },
     "form.current_position": {
       async handler(newVal) {
-        return newVal
-          ? (this.form.end_date = moment().format("YYYY-MM-DD"))
-          : (this.form.end_date = this.selectedJobRecord[0].end_date);
+        if (newVal) {
+          this.form.end_date = moment().format("YYYY-MM-DD");
+        }
       }
     }
   }
 };
 </script>
 
-<style lang="scss" src="../styles/record.scss"></style>
+<style lang="scss" src="../styles/createRecord.scss"></style>

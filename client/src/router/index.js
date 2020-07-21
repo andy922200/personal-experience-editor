@@ -6,6 +6,7 @@ import SignIn from "../views/SignIn.vue";
 import SignUp from "../views/SignUp.vue";
 import Profile from "../views/Profile.vue";
 import Record from "../views/Record.vue";
+import createRecord from "../views/CreateRecord.vue";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -25,6 +26,11 @@ const routes = [
     path: "/signUp",
     name: "signUp",
     component: SignUp
+  },
+  {
+    path: "/create",
+    name: "createRecord",
+    component: createRecord
   },
   {
     path: "/record/:recordId/:userId",
@@ -85,10 +91,8 @@ router.beforeEach(async (to, from, next) => {
   next();
 });
 
-// router.afterEach(() => {
-//   document
-//     .querySelector("body")
-//     .setAttribute("style", "background-color: #2F0900");
-// });
+router.afterEach(() => {
+  window.scrollTo(0, 0);
+});
 
 export default router;

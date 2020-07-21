@@ -10,24 +10,6 @@
     text-align: center;
     margin: 10px 0px;
   }
-  .logInUser{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap:wrap;
-    margin: 10px 0px;
-    width:100%;
-    .profile_img__wrapper{
-      max-width: 200px;
-      max-height: 200px;
-      .profile_img{
-        @include responsive-images
-      }
-    }
-    .profile__info{
-      margin-left: 10px;
-    }
-  }
 
   .addRecord{
     margin: 10px 0px;
@@ -36,6 +18,28 @@
   .jobRecords{
     .person{
       margin-bottom: 10px;
+      .logInUser{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap:wrap;
+        margin: 10px 0px;
+        width:100%;
+        .profile_img__wrapper{
+          max-width: 200px;
+          max-height: 200px;
+          .profile_img{
+            @include responsive-images
+          }
+        }
+        .profile__info{
+          margin-left: 10px;
+        }
+      }
+      .addRecord{
+        display: flex;
+        justify-content: center;
+      }
       .person__title{
         text-align: center;
         font-size: 28px;
@@ -88,7 +92,7 @@
           @include mobile{
             justify-content:center;
           }
-          a{
+          button{
             margin-left: 10px;
           }
         }

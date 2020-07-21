@@ -7,40 +7,42 @@
           <div class="homepage">
             <h3 class="landingPage__title">Hello, {{ landingPageName }}</h3>
 
-            <template v-if="currentUser.id !== -1">
-              <div class="logInUser">
-                <div class="profile_img__wrapper">
-                  <img
-                    :src="currentUser.profile_img"
-                    alt="profile_img"
-                    class="profile_img"
-                  />
-                </div>
-                <div class="profile__info">
-                  <p>Name : {{ currentUser.name }}</p>
-                  <p>Age : {{ currentUser.age }}</p>
-                  <p>Email : {{ currentUser.email }}</p>
-                </div>
-              </div>
-              <div class="addRecord">
-                <b-button pill href="#" variant="primary"
-                  >Add a new experience</b-button
-                >
-              </div>
-            </template>
-
             <div class="jobRecords">
               <div
                 class="person"
-                v-for="(person, index) in jobRecords"
+                v-for="person in jobRecords"
                 :key="person.id"
               >
                 <h4
                   class="person__title"
-                  v-if="!isAuthenticated || index !== 0"
+                  v-if="!isAuthenticated || currentUser.id !== person.id"
                 >
                   {{ person.name }}
                 </h4>
+
+                <template>
+                  <div class="logInUser">
+                    <div class="profile_img__wrapper">
+                      <img
+                        :src="person.profile_img"
+                        alt="profile_img"
+                        class="profile_img"
+                      />
+                    </div>
+                    <div class="profile__info">
+                      <p>Age : {{ person.age }}</p>
+                      <p>Email : {{ person.email }}</p>
+                    </div>
+                  </div>
+                  <div class="addRecord" v-if="currentUser.id === person.id">
+                    <router-link :to="{ name: 'createRecord' }">
+                      <b-button pill variant="primary"
+                        >Add a new experience</b-button
+                      >
+                    </router-link>
+                  </div>
+                </template>
+
                 <div class="cards">
                   <b-card
                     v-for="record in person.data"
@@ -98,7 +100,15 @@
                         >
                           <b-button pill variant="secondary">Edit</b-button>
                         </router-link>
-                        <b-button pill href="#" variant="danger"
+                        <b-button
+                          pill
+                          variant="danger"
+                          @click="
+                            triggerDeleteRecord({
+                              userId: currentUser.id,
+                              recordId: record.id
+                            })
+                          "
                           >Delete</b-button
                         >
                       </div>
@@ -117,6 +127,7 @@
 <script>
 import Navbar from "./../components/Navbar";
 import { mapGetters, mapActions } from "vuex";
+import { Toast } from "./../utils/mixin";
 
 export default {
   name: "Homepage",
@@ -136,7 +147,27 @@ export default {
     }
   },
   methods: {
-    ...mapActions("jobRecords", ["getJobRecords"])
+    ...mapActions("jobRecords", ["getJobRecords", "deleteOneJobRecord"]),
+    async triggerDeleteRecord(idObject) {
+      try {
+        let fetchingResult = await this.deleteOneJobRecord(idObject);
+        if (fetchingResult) {
+          Toast.fire({
+            icon: "success",
+            title: "Delete Successfully!"
+          });
+          // reload homepage data
+          this.getJobRecords(this.currentUser.id);
+        } else {
+          Toast.fire({
+            icon: "warning",
+            title: "Something went wrong! Please try again later."
+          });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
   }
 };
 </script>

@@ -40,6 +40,15 @@ export const jobRecordsAPI = {
       headers: { Authorization: `Bearer ${getToken()}` }
     });
   },
+  postOneJobRecord: objectData => {
+    return LocalDbRequest.post(
+      `/jobRecords/create/by${objectData.userId}`,
+      objectData.data,
+      {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      }
+    );
+  },
   putOneJobRecord: objectData => {
     return LocalDbRequest.put(
       `/jobRecords/edit/${objectData.recordId}`,
@@ -48,5 +57,10 @@ export const jobRecordsAPI = {
         headers: { Authorization: `Bearer ${getToken()}` }
       }
     );
+  },
+  deleteOneJobRecord: objectData => {
+    return LocalDbRequest.delete(`/jobRecords/delete/${objectData.recordId}`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    });
   }
 };

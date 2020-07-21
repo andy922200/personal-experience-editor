@@ -10,6 +10,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     windowWidth: 0,
+    windowHeight: 0,
     today: moment().format("YYYY-MM-DD"),
     isValidatingUser: false,
     isAuthenticated: false,
@@ -23,6 +24,7 @@ export default new Vuex.Store({
   },
   getters: {
     windowWidth: state => state.windowWidth,
+    windowHeight: state => state.windowHeight,
     today: state => state.today,
     isValidatingUser: state => state.isValidatingUser,
     isRegistering: state => state.isRegistering,
@@ -33,6 +35,9 @@ export default new Vuex.Store({
   mutations: {
     setWindowWidth(state, value) {
       state.windowWidth = value;
+    },
+    setWindowHeight(state, value) {
+      state.windowHeight = value;
     },
     setIsRegistering(state, status) {
       state.isRegistering = status;

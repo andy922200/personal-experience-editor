@@ -5,7 +5,8 @@
       <div class="row">
         <div class="col-12">
           <div class="signIn">
-            <form class="w-100" @submit.prevent.stop="handleSignInForm">
+            <Spinner v-if="isValidatingUser" />
+            <form v-else class="w-100" @submit.prevent.stop="handleSignInForm">
               <div class="text-center my-3">
                 <h1 class="h3 font-weight-normal">Sign In</h1>
               </div>
@@ -63,12 +64,13 @@
 
 <script>
 import Navbar from "../components/Navbar";
+import Spinner from "../components/Spinner"
 import { mapGetters, mapActions } from "vuex";
 import { Toast } from "./../utils/mixin";
 
 export default {
   name: "SignIn",
-  components: { Navbar },
+  components: { Navbar, Spinner },
   data() {
     return {
       form: {

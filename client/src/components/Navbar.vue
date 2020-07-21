@@ -106,7 +106,7 @@ export default {
     ...mapGetters(["isAuthenticated", "windowWidth", "currentUser"])
   },
   methods: {
-    ...mapMutations(["revokeAuthentication","fetchCurrentUser"]),
+    ...mapMutations(["revokeAuthentication", "fetchCurrentUser"]),
     ...mapActions("jobRecords", ["getJobRecords"]),
     changeExpansion(status) {
       status ? (this.isExpanded = true) : (this.isExpanded = false);
@@ -116,7 +116,7 @@ export default {
         this.revokeAuthentication();
         if (this.$route.name !== "homepage") {
           this.$router.push({ name: "homepage" });
-        }else{
+        } else {
           this.getJobRecords("default");
         }
         Toast.fire({
