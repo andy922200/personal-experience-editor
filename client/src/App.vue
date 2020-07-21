@@ -19,6 +19,7 @@ export default {
   computed: {
     ...mapGetters([
       "windowWidth",
+      "windowHeight",
       "today",
       "isValidatingUser",
       "isAuthenticated",
@@ -27,12 +28,13 @@ export default {
     ])
   },
   methods: {
-    ...mapMutations(["setWindowWidth"]),
+    ...mapMutations(["setWindowWidth","setWindowHeight"]),
     initialize() {
       this.detectWindowWidth();
     },
     detectWindowWidth() {
       this.setWindowWidth(window.innerWidth);
+      this.setWindowHeight(window.innerHeight);
     }
   }
 };
