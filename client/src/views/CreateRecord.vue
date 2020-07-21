@@ -229,7 +229,8 @@ export default {
     async recoverLastEntries() {
       try {
         if (!_.isEmpty(this.lastEntries)) {
-          this.form = this.lastEntries;
+          let changeRefAddress = _.cloneDeep(this.lastEntries);
+          this.form = changeRefAddress;
           this.openAlert = false;
         }
       } catch (err) {
@@ -319,6 +320,12 @@ export default {
       async handler(newVal) {
         if (newVal) {
           this.form.end_date = moment().format("YYYY-MM-DD");
+        } else {
+          if (localStorage[`createForm`]) {
+            this.form.end_date = this.lastEntries.end_date;
+          } else {
+            this.form.end_date = "";
+          }
         }
       }
     }

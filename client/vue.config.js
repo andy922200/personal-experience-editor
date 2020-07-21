@@ -7,7 +7,7 @@ module.exports = {
     // host: "localhost",
     proxy: {
       "/api": {
-        target: "https://personal-experience-editor.herokuapp.com/",
+        target: "https://personal-experience-editor.herokuapp.com/"
         // target: "http://localhost:3000"
       }
     }
