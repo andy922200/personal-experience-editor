@@ -54,13 +54,13 @@
                         <p class="workPeriod">
                           From {{ record.start_date }}
                           {{
-                            record.current_position
+                            record.current_position || record.end_date === today
                               ? "until now"
                               : `to ${record.end_date}`
                           }}
                           <span
                             class="workPeriod__star"
-                            v-if="record.current_position"
+                            v-if="record.current_position || record.end_date === today"
                             >*</span
                           >
                         </p>
@@ -136,7 +136,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["currentUser", "isAuthenticated"]),
+    ...mapGetters(["currentUser", "isAuthenticated","today"]),
     ...mapGetters("jobRecords", ["jobRecords"]),
     landingPageName() {
       return this.currentUser.id === -1 ? "Anonymous" : this.currentUser.name;
